@@ -61,14 +61,15 @@ public class Solution
 	
 	public static void main(String[] args)throws Exception
 	{
-		TreeNode node=new TreeNode(0);
-		node.left=new TreeNode(0);
-		node.right=new TreeNode(0);
-		Solution solution=new Solution();
-		solution.countNodes(node);
 		
-		int n=82;
-		double log=  Math.log10(n)/Math.log10(3);
+//		TreeNode node=new TreeNode(0);
+//		node.left=new TreeNode(0);
+//		node.right=new TreeNode(0);
+//		Solution solution=new Solution();
+//		solution.countNodes(node);
+//		
+//		int n=82;
+//		double log=  Math.log10(n)/Math.log10(3);
 //		 System.out.print( Math.round(log));
 //		 int turn=(int)log;
 //		

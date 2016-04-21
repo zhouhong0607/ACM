@@ -5,53 +5,31 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class Solution
 {
 	public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t)
 	{
 
-		if (k <= 0 || t < 0)
+		if (k <= 0 || t < 0 || nums.length < 2)
 			return false;
-		HashMap<Integer, Integer> hashMap = new HashMap<>();
+
+		TreeSet<Long> hashMap = new TreeSet<>();
 
 		for (int i = 0; i < nums.length; i++)
 		{
-			List<Integer> keyDelete=new LinkedList<>();
-			for (Integer key : hashMap.keySet())
-			{
-				
-				if (i - hashMap.get(key) <= k)
-				{
-					if (Math.abs(key - nums[i]) <= t)
-					{
-						return true;
-					}else
-					{
-						keyDelete.add(key);
-					}
-						
-				}else
-				{
-					keyDelete.add(key);
-				}
+			if (i > k)
+				hashMap.remove((long) nums[i - k - 1]);
 
-			}
-			for(Integer key:keyDelete)
-			{
-				hashMap.remove(key);
-			}
-			
-			if (!hashMap.containsKey(nums[i]))
-			{
-				hashMap.put(nums[i], i);
-			} else
-			{
-				hashMap.replace(nums[i], i);
-			}
-
+			long low = (long) nums[i] - (long) Math.abs(t);
+			long high = (long) nums[i] + (long) Math.abs(t)+1;
+			if (!hashMap.subSet(low, high).isEmpty())
+				return true;
+			hashMap.add((long) nums[i]);
 		}
 		return false;
+
 	}
 
 	public static void main(String[] args) throws Exception

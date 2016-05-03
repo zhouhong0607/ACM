@@ -38,8 +38,10 @@ public class Solution
 
 	public static void main(String[] args) throws Exception
 	{
-		Solution solution = new Solution();
-		solution.addDigits(38);
+//		Solution solution = new Solution();
+//		solution.addDigits(38);
+		Double infinite=Double.POSITIVE_INFINITY;
+		System.out.print(infinite==infinite-1.0);
 
 	}
 }

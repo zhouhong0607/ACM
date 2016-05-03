@@ -16,6 +16,8 @@ public class Solution
 			sell=ifSell;
 			cool=ifCool;
 		}
+		
+		
 		return Math.max(sell, cool);
 	}
 }

@@ -7,42 +7,27 @@ public class Solution
 {
 	public int minDepth(TreeNode root)
 	{
-		if(root==null) return 0;
-		int minDeep=0;
-		Queue<TreeNode> curLevel=new LinkedList<>();
-		curLevel.offer(root);
-		
-		while(!curLevel.isEmpty())
+		if (root == null)
+			return 0;
+		return minDepth(root, 1);
+	}
+
+	private int minDepth(TreeNode node, int depth)
+	{
+		if (node.left == null && node.right == null)
 		{
-			Queue<TreeNode> nextLevel=new LinkedList<>();
-			minDeep++;
-			while(!curLevel.isEmpty())
-			{
-				TreeNode node=curLevel.poll();
-				
-				if(node.left==null&&node.right==null)
-				{
-				    return minDeep;
-				}
-				
-				if(node.left!=null)
-				{
-					nextLevel.offer(node.left);
-				}
-				if(node.right!=null)
-				{
-					nextLevel.offer(node.right);
-				}
-			}
-		
-			curLevel=nextLevel;
-			
+			return depth;
+		} else if (node.left == null)
+		{
+			return minDepth(node.right, depth + 1);
+		} else if (node.right == null)
+		{
+			return minDepth(node.left, depth + 1);
+		} else
+		{
+			return Math.min(minDepth(node.left, depth+1), minDepth(node.right, depth+1));
 		}
-		
-		
-		
-		
-		return  minDeep;
+
 	}
 
 	public class TreeNode

@@ -22,6 +22,13 @@ public class Solution
 		return true;
 	}
 
+	private int getHeight(TreeNode node)
+	{
+		if(node==null) return 0;
+		return Math.max(getHeight(node.left), getHeight(node.right))+1;
+	}
+	
+	
 	public class TreeNode
 	{
 		int val;

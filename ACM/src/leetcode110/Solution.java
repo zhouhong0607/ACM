@@ -6,20 +6,16 @@ public class Solution
 	{
 		if(root==null) return true;
 		
-		if(root.left!=null&&root.right!=null)
+		int leftHeight=getHeight(root.left);
+		int rightHeight=getHeight(root.right);
+		
+		if(Math.abs(leftHeight-rightHeight)>1)
 		{
-			return isBalanced(root.left)||isBalanced(root.right);
-		}else if (root.left==null&&root.right==null)
-		{
-			return true;
-		}else if (root.left==null)
-		{
-			 if(root.right.left!=null||root.right.right!=null) return false;
+			return false;
 		}else
 		{
-			if(root.left.left!=null||root.left.right!=null) return false;
+			return isBalanced(root.left)&&isBalanced(root.right);
 		}
-		return true;
 	}
 
 	private int getHeight(TreeNode node)

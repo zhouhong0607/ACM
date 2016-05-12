@@ -11,29 +11,20 @@ public class Solution
 		{
 			if (nums[j] != val)
 			{
-				swap(nums, i, j);
+				int c=nums[i];
+				nums[i]=nums[j];
+				nums[j]=c;
 				i++;
 			}
-			j++;
 		}
+	
 		return i;
 	}
-
-	private void swap(int[] nums, int a, int b)
-	{
-		int c = nums[a];
-		nums[a] = nums[b];
-		nums[b] = c;
-	}
-
 	public static void main(String[] args) throws Exception
 	{
 		int[] nums={3,2,2,3};
-		nums=new int[3];
-		for(int i=0;i<nums.length;i++)
-		{
-			System.out.println(nums[i]);
-		}
+		Solution solution=new Solution();
+		solution.removeElement(nums, 3);
 	}
 
 }

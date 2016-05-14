@@ -32,6 +32,7 @@ public class CopyData
 				}
 			}
 			cWriter.write(changeData);
+		
 			cWriter.append(System.getProperty("line.separator"));  
 		}
 		bf.close();
@@ -46,12 +47,22 @@ public class CopyData
 		}
 		FileWriter fWriter=new FileWriter(file);
 		cWriter.writeTo(fWriter);
+		fWriter.flush();
+		cWriter.close();
+		fWriter.close();
+		
 		
 	}
 	
-	public static void main(String[] args)throws Exception
+	public static void main(String[] args)
 	{
+		try
+		{
 		String filePath="src/test/data.txt";
 		CopyData copyData=new CopyData(filePath);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

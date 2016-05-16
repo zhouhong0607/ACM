@@ -10,11 +10,11 @@ public class Solution
 	public List<List<String>> groupAnagrams(String[] strs)
 	{
 		List<List<String>> result = new LinkedList<>();
-		HashMap<Integer, Integer> map = new HashMap<>();
+		HashMap<String, Integer> map = new HashMap<>();
 		int location = 0;
 		for (int i = 0; i < strs.length; i++)
 		{
-			int hash = getHashCode(strs[i]);
+			String hash = getKey(strs[i]);
 			if (!map.containsKey(hash))
 			{
 				map.put(hash, location);
@@ -24,11 +24,11 @@ public class Solution
 			} else
 			{
 				int index = 0;
-				int size1=size(strs[i]);
+				
 				for (String s : result.get(map.get(hash)))
 				{
-					int size2=size(s);
-					if(size1<size2)
+					
+					if(less(strs[i], s))
 						break;
 					index++;
 				}
@@ -39,29 +39,27 @@ public class Solution
 
 	}
 
-	private int size(String s)
+	private boolean less(String s1,String s2)
 	{
-		int size=0;
-		char[] sc=s.toCharArray();
-		for(int i=0;i<sc.length;i++)
-			size=size*256+sc[i];
-		return size;
+		char[] c1=s1.toCharArray();
+		char[] c2=s2.toCharArray();
+		for(int i=0;i<c1.length;i++)
+		{
+			if(c1[i]<c2[i]) return true;
+			if(c1[i]>c2[i]) return false;
+		}
+		return false;
 	}
-	
 	// 计算 s 的 hashcode
-	private int getHashCode(String s)
+	private String getKey(String s)
 	{
-		int hash = 0;
 		char[] sc = s.toCharArray();
 		Arrays.sort(sc);
-		for (int i = 0; i < sc.length; i++)
-			hash += hash*256+ sc[i];
-		return hash;
+		return new String(sc);
 	}
-	
 	public static void main(String[] args)throws Exception
 	{
-		String[] ss={"c","c"};
+		String[] ss={"and","dan"};
 		Solution solution=new Solution();
 		solution.groupAnagrams(ss);
 	}

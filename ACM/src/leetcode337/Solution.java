@@ -1,39 +1,39 @@
 package leetcode337;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import treenode.TreeNode;
+ 
 public class Solution
 {
 	public int rob(TreeNode root)
 	{
-		int money1=0;
-		int money2=0;
-		collect(root, money1, money2, true);
+		Map<TreeNode, Integer> map=new HashMap<>();
+		return collect(root,map);
 	}
 
-	private void collect(TreeNode node,int money1,int money2,boolean flag)
+	private int collect(TreeNode node,Map<TreeNode, Integer> map)
 	{
-		if(node==null) return;
-		if(flag)
-		{
-			money1+=node.val;
-		}else
-		{
-			money2+=node.val;
-		}
-		collect(node.left, money1, money2, !flag);
-		collect(node.right, money1, money2,!flag);
+		if(node==null) return 0;
+		if(map.containsKey(node))
+			return map.get(node);
 		
+		int rob=0;
+		if(node.left!=null)
+		{
+			rob+=collect(node.left.left,map)+collect(node.left.right,map);
+		}
+		if(node.right!=null)
+		{
+			rob+=collect(node.right.left,map)+collect(node.right.right,map);
+		}
+		
+		rob= Math.max(collect(node.left,map)+collect(node.right,map), node.val+rob);
+		map.put(node, rob);
+		return rob;
 	}
 	
-	public class TreeNode
-	{
-		int val;
-		TreeNode left;
-		TreeNode right;
-
-		TreeNode(int x)
-		{
-			val = x;
-		}
-	}
+	
 
 }

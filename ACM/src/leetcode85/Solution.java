@@ -1,88 +1,80 @@
 package leetcode85;
 
+import java.util.Stack;
+
 public class Solution
 {
 	public int maximalRectangle(char[][] matrix)
 	{
-		if(matrix==null||matrix.length<1||matrix[0].length<1) return 0;
-		int m=matrix.length;
-		int n=matrix[0].length;
-		int result=0;
-		int[][] row=new int[m][n];
-		int[][] col=new int[m][n];
-		int[][] minCol=new int[m][n];
-		int[][] minRow=new int[m][n];
-		
-		
-		if(matrix[0][0]=='1')
+		if (matrix == null || matrix.length == 0 || matrix[0].length == 0)
+			return 0;
+
+		int[] height = new int[matrix[0].length];
+		for (int i = 0; i < matrix[0].length; i++)
 		{
-			row[0][0]=1;
-			col[0][0]=1;
-			minCol[0][0]=1;
-			minRow[0][0]=1;
-			result=1;
+			if (matrix[0][i] == '1')
+				height[i] = 1;
 		}
-		
-		for(int k=1;k<m;k++)
+		int result = largestInLine(height);
+		for (int i = 1; i < matrix.length; i++)
 		{
-			if(matrix[k][0]=='1')
-			{
-				col[k][0]=1;
-				minCol[k][0]=1;
-				row[k][0]=row[k-1][0]+1;
-				minRow[k][0]=row[k-1][0]+1;
-				result=Math.max(result, row[k][0]);
-			}
+			resetHeight(matrix, height, i);
+			result = Math.max(result, largestInLine(height));
 		}
-		
-		for(int l=1;l<n;l++)
-		{
-			if(matrix[0][l]=='1')
-			{
-				row[0][l]=1;
-				minRow[0][l]=1;
-				col[0][l]=col[0][l-1]+1;
-				minCol[0][l]=col[0][l-1]+1;
-				result=Math.max(result, col[0][l]);
-			}
-		}
-		
-		for(int i=1;i<m;i++)
-			for(int j=1;j<n;j++)
-			{
-				if(matrix[i][j]=='1')
-				{
-					col[i][j]=col[i][j-1]+1;
-					row[i][j]=row[i-1][j]+1;
-					minCol[i][j]=Math.min(col[i][j-1],col[i-1][j-1])+1;
-					minRow[i][j]=Math.min(row[i-1][j], row[i-1][j-1])+1;
-					int max1=Math.max(minCol[i][j]*minRow[i][j], Math.max(col[i][j], row[i][j]));
-					result=Math.max(max1, result);
-				}                                                                                                                                                                                                                                                       
-			}
+
 		return result;
 	}
+
+	private void resetHeight(char[][] matrix, int[] height, int idx)
+	{
+		for (int i = 0; i < matrix[0].length; i++)
+		{
+			if (matrix[idx][i] == '1')
+				height[i] += 1;
+			else
+				height[i] = 0;
+		}
+	}
+
+	public int largestInLine(int[] height)
+	{
+		if (height == null || height.length < 1)
+			return 0;
+		int[] stack = new int[height.length + 1];
+		int len = 0, max = 0;
+		for (int i = 0; i <= height.length; i++)
+		{
+			int h = (i == height.length) ? 0 : height[i];
+			while (len != 0 && (i == height.length || height[stack[len - 1]] > h))
+			{
+				if (len == 1)
+					max = Math.max(height[stack[--len]] * i, max);
+				else
+					max = Math.max(height[stack[--len]] * (i - stack[len - 1] - 1), max);
+			}
+			stack[len++] = i;
+		}
+		return max;
+	}
+
 	public static void main(String[] args) throws Exception
 	{
-//		char[][] nums={
-//					  {'1','0','1','0','0'},
-//				      {'1','0','1','1','1'},
-//				      {'1','1','1','1','1'},
-//				      {'1','0','0','1','0'},
-//				      			};
-		
-//		char[][] nums={
-//				  {'1','1'},
-//				  {'1','1'}
-//			      			};
-		
-		char[][] nums={
-		  {'1','1','0','1'},
-		  {'1','1','0','1'},
-		  {'1','1','1','1'},
-	      			};
-		
-		Solution solution=new Solution();
+		// char[][] nums={
+		// {'1','0','1','0','0'},
+		// {'1','0','1','1','1'},
+		// {'1','1','1','1','1'},
+		// {'1','0','0','1','0'},
+		// };
+
+		// char[][] nums={
+		// {'1','1'},
+		// {'1','1'}
+		// };
+
+		char[][] nums = { { '1', '1', '0', '1', '0', '1' }, { '0', '1', '0', '0', '1', '1' },
+				{ '1', '1', '1', '1', '0', '1' }, { '1', '1', '1', '1', '0', '1' } };
+
+		Solution solution = new Solution();
 		System.out.println(solution.maximalRectangle(nums));
 	}
 }

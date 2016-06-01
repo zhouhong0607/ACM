@@ -3,7 +3,7 @@ package leetcode337;
 import java.util.HashMap;
 import java.util.Map;
 
-import treenode.TreeNode;
+
  
 public class Solution
 {
@@ -34,6 +34,16 @@ public class Solution
 		return rob;
 	}
 	
-	
+	public class TreeNode
+	{
+		public int val;
+		public TreeNode left;
+		public TreeNode right;
+
+		TreeNode(int x)
+		{
+			val = x;
+		}
+	}
 
 }

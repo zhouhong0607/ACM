@@ -32,5 +32,6 @@ public class Solution
 			next = null;
 		}
 	}
+	//console SET targetNearestDistance 300 (300码)
 
 }

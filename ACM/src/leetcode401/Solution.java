@@ -62,7 +62,7 @@ public class Solution
 	public static void main(String[] args) throws Exception
 	{
 		Solution solution=new Solution();
-		System.out.println(solution.readBinaryWatch(1));
+		System.out.println(solution.readBinaryWatch(0));
 		
 	}
 	
